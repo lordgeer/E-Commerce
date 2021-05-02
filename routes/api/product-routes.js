@@ -90,17 +90,17 @@ router.put('/:id', (req, res) => {
 });
 // delete one product by its `id` value
 router.delete('/:id', (req, res) => {
-  Category.destroy({
+  Product.destroy({
     where: {
       id: req.params.id
     }
   })
-    .then(categoryData => {
-      if (!categoryData) {
+    .then(productData => {
+      if (!productData) {
         res.status(404).json({ message: "No such entry found"});
         return;
       }
-      res.json(categoryData);
+      res.json(productData);
     })
     .catch(err => {
       console.log(err);
