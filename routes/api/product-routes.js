@@ -3,10 +3,28 @@ const { Product, Category, Tag, ProductTag } = require('../../../unc-ral-virt-fs
 
 // The `/api/products` endpoint
 
-// get all products
-router.get('/', (req, res) => {
-  // find all products
+// get all products 
+ // find all products
   // be sure to include its associated Category and Tag data
+router.get('/', (req, res) => {
+
+  Product.findAll({
+    include: [
+      {
+        model: Category,
+        attributes: ['id', 'category_name']
+      },
+      {
+        model: Tag,
+        attributes: ['id', 'tag_name']
+      }
+    ]
+  })
+    .then(dbProductData => res.json(dbProductData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 // get one product
@@ -95,12 +113,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-    .then(productData => {
-      if (!productData) {
+    .then(dbProductData => {
+      if (!dbProductData) {
         res.status(404).json({ message: "No such entry found"});
         return;
       }
-      res.json(productData);
+      res.json(dbProductData);
     })
     .catch(err => {
       console.log(err);

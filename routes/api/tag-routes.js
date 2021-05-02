@@ -2,10 +2,23 @@ const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../../unc-ral-virt-fsf-pt-01-2021-u-c/13-ORM/02-Homework/Develop/models');
 
 // The `/api/tags` endpoint
-
-router.get('/', (req, res) => {
-  // find all tags
+ // find all tags
   // be sure to include its associated Product data
+router.get('/', (req, res) => {
+  Tag.findAll({
+    include: [
+      {
+        model: Product,
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id'],
+      }
+    ]
+  })
+    .then(dbTagData => res.json(dbTagData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+ 
 });
 
 router.get('/:id', (req, res) => {
@@ -28,12 +41,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-    .then(tagData => {
-      if (!tagData) {
+    .then(dbTagData => {
+      if (!dbTagData) {
         res.status(404).json({ message: "No such entry found"});
         return;
       }
-      res.json(tagData);
+      res.json(dbTagData);
     })
     .catch(err => {
       console.log(err);

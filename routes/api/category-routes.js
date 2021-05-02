@@ -6,6 +6,19 @@ const { Category, Product } = require('../../../unc-ral-virt-fsf-pt-01-2021-u-c/
 router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
+  Category.findAll({
+    include: [
+      {
+        model: Product,
+        attributes: ['id', 'product_name', 'price', 'stock', 'category_id']
+      }
+    ]
+  })
+    .then(dbCategoryData => res.json(dbCategoryData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.get('/:id', (req, res) => {
@@ -28,12 +41,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-    .then(categoryData => {
-      if (!categoryData) {
+    .then(dbCategoryData => {
+      if (!dbCategoryData) {
         res.status(404).json({ message: "No such entry found"});
         return;
       }
-      res.json(categoryData);
+      res.json(dbCategoryData);
     })
     .catch(err => {
       console.log(err);
