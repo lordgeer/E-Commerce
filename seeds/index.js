@@ -1,4 +1,4 @@
-const seedCategories = require('../../unc-ral-virt-fsf-pt-01-2021-u-c/13-ORM/02-Homework/Develop/seeds/category-seeds');
+const seedCategories = require('./seeds/category-seeds');
 const seedProducts = require('./product-seeds');
 const seedTags = require('./tag-seeds');
 const seedProductTags = require('./product-tag-seeds');

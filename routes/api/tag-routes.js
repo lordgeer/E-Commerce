@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Tag, Product, ProductTag } = require('../../../unc-ral-virt-fsf-pt-01-2021-u-c/13-ORM/02-Homework/Develop/models');
+const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
  // find all tags
@@ -57,9 +57,24 @@ router.post('/', (req, res) => {
         res.status(500).json(err);
   });
 });
-
+// update a tag's name by its `id` value
 router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+  Tag.update(req.body, {
+    where: {
+        id: req.params.id
+    }
+  })
+    .then(dbTagData => {
+        if (!dbTagData[0]) {
+            res.status(404).json({ message: 'No such entry found'});
+            return;
+        }
+        res.json(dbTagData);
+  })
+    .catch(err => {
+        console.log(err); 
+        res.status(500).json(err);
+  });
 });
 
 // delete on tag by its `id` value

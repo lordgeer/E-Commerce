@@ -1,4 +1,4 @@
-const { Category } = require('../../unc-ral-virt-fsf-pt-01-2021-u-c/13-ORM/02-Homework/Develop/models');
+const { Category } = require('../../models');
 
 const categoryData = [
   {

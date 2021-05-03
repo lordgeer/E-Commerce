@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require('sequelize');
 
-const sequelize = require('../../../../../E-Commerce/config/connection');
+const sequelize = require('../config/connection');
 
 class ProductTag extends Model {}
   // define columns

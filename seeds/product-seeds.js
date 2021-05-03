@@ -1,4 +1,4 @@
-const { Product } = require('../../unc-ral-virt-fsf-pt-01-2021-u-c/13-ORM/02-Homework/Develop/models');
+const { Product } = require('../../models');
 
 const productData = [
   {
